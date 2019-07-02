@@ -55,7 +55,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    db.execute('SELECT * from ap WHERE meterassignemnt_id = ?', id)
+    db.execute('SELECT * from ap WHERE meterassignment_id = ?', id)
         .then((data) => {
             if (data.length > 0) {
                 return res.status(201).json(data[0]);
