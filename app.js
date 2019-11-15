@@ -53,6 +53,25 @@ router.get('/', (req, res) => {
         });
 });
 
+router.get('/all', (req, res) => {
+    let limit = parseInt(req.query.limit);
+    db.execute(`SELECT * FROM ap ${(limit ? 'LIMIT ?': '')} `, limit)
+        .then((data) => {
+            if (data.length > 0) {
+                return res.status(201).json(data);
+            } else {
+                return res.status(200).json({
+                    message: "Empty data",
+                    data: []
+                });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ message: "Error encountered"});
+        });
+});
+
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     db.execute('SELECT * from ap WHERE meterassignment_id = ?', id)
@@ -71,5 +90,4 @@ router.get('/:id', (req, res) => {
             return res.status(500).json({ message: "Error encountered"});
         });
 });
-
 app.use(router);
