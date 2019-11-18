@@ -58,7 +58,9 @@ router.get('/all', (req, res) => {
     db.execute(`SELECT * FROM ap ${(limit ? 'LIMIT ?': '')} `, limit)
         .then((data) => {
             if (data.length > 0) {
-                return res.status(201).json(data);
+                return res.status(201).json({ 
+                    data 
+                });
             } else {
                 return res.status(200).json({
                     message: "Empty data",
